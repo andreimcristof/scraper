@@ -1,4 +1,4 @@
-package htmlparser
+package main
 
 import (
 	"io/ioutil"
@@ -6,10 +6,15 @@ import (
 	"os"
 )
 
-func bodyOfURL(url string) {
+func main() {
+	parse("https://www.google.se")
+	// print(r)
+}
+
+func parse(url string) string {
 	response := fetch(url)
 	parsed := ParseHTML(response)
-	return parsed
+	return parsed.Data
 }
 
 func fetch(url string) string {
