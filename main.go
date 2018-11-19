@@ -10,10 +10,8 @@ func main() {
 	tagsWithContent := parse("https://www.google.se")
 
 	for i := 0; i < len(tagsWithContent); i++ {
-		println("content", tagsWithContent[i].content)
-		print("tag", tagsWithContent[i].tag)
+		println(tagsWithContent[i].tag, ":", tagsWithContent[i].content)
 	}
-
 }
 
 func parse(url string) []TagWithContent {
