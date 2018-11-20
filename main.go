@@ -1,22 +1,33 @@
 package main
 
 import (
+	"flag"
 	"io/ioutil"
 	"net/http"
 	"os"
 )
 
 func main() {
-	tagsWithContent := parse("https://www.google.se")
+	url, tag := setupFlags()
+
+	tagsWithContent := parse(url, tag)
 
 	for i := 0; i < len(tagsWithContent); i++ {
 		println(tagsWithContent[i].tag, ":", tagsWithContent[i].content)
 	}
 }
 
-func parse(url string) []TagWithContent {
+func setupFlags() (string, string) {
+	urlFlagPtr := flag.String("url", "https://google.de", "enter url to parse")
+	tagFlagPtr := flag.String("tag", "div", "(optional) enter a specific tag to retrieve only")
+	flag.Parse()
+	println("parsing url:", *urlFlagPtr, "| tag:", *tagFlagPtr)
+	return *urlFlagPtr, *tagFlagPtr
+}
+
+func parse(url string, tag string) []TagWithContent {
 	response := fetch(url)
-	parsed := ParseHTMLPage(response, "div")
+	parsed := ParseHTMLPage(response, tag)
 	return parsed
 }
 
