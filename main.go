@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 )
@@ -18,9 +19,14 @@ func main() {
 }
 
 func setupFlags() (string, string) {
-	urlFlagPtr := flag.String("url", "https://google.de", "enter url to parse")
-	tagFlagPtr := flag.String("tag", "div", "(optional) enter a specific tag to retrieve only")
+	urlArgHint := "enter url to parse"
+	tagArgHint := "(optional) enter a specific tag to retrieve only"
+	urlFlagPtr := flag.String("url", "", urlArgHint)
+	tagFlagPtr := flag.String("tag", "", tagArgHint)
 	flag.Parse()
+	if *urlFlagPtr == "" {
+		log.Fatal("must specify --url flag")
+	}
 	println("parsing url:", *urlFlagPtr, "| tag:", *tagFlagPtr)
 	return *urlFlagPtr, *tagFlagPtr
 }
@@ -32,9 +38,10 @@ func parse(url string, tag string) []TagWithContent {
 }
 
 func fetch(url string) string {
-	res, getErr := http.Get(url)
-	if getErr != nil {
-		os.Exit(1)
+	res, err := http.Get(url)
+	if err != nil {
+		println("url err", err.Error())
+		os.Exit(2)
 	}
 	defer res.Body.Close()
 

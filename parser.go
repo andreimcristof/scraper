@@ -54,7 +54,8 @@ func getHTMLDocument(content string) *html.Node {
 	reader := strings.NewReader(content)
 	htmldoc, err := html.Parse(reader)
 	if err != nil {
-		os.Exit(2)
+		println("parse err", err.Error())
+		os.Exit(3)
 	}
 	return htmldoc
 }
