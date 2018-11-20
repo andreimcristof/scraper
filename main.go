@@ -16,7 +16,7 @@ func main() {
 
 func parse(url string) []TagWithContent {
 	response := fetch(url)
-	parsed := ParseHTML(response)
+	parsed := ParseHTMLPage(response, "div")
 	return parsed
 }
 
