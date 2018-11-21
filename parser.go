@@ -23,9 +23,7 @@ func (t TagWithContent) isValidTag(specificTag string) bool {
 	return isValid
 }
 
-// ParseHTMLPage parse an html content recursively and return result as a struct
-//TODO: export as pkg somehow
-func ParseHTMLPage(content string, specificTag string) []TagWithContent {
+func parseHTMLPage(content string, specificTag string) []TagWithContent {
 	var tagsWithContent []TagWithContent
 	htmldoc := getHTMLDocument(content)
 

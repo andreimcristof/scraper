@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func parse() {
+func Parse() {
 	url, tag := setupFlags()
 
 	tagsWithContent := getTagsList(url, tag)
@@ -33,7 +33,7 @@ func setupFlags() (string, string) {
 
 func getTagsList(url string, tag string) []TagWithContent {
 	response := fetch(url)
-	parsed := ParseHTMLPage(response, tag)
+	parsed := parseHTMLPage(response, tag)
 	return parsed
 }
 
