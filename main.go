@@ -8,13 +8,22 @@ import (
 	"os"
 )
 
-func Parse() {
+// ParseWithArgs parse from arguments url and tag
+func ParseWithArgs(url string, tag string) {
+	tagsWithContent := parse(url, tag)
+	executeAction(tagsWithContent)
+}
+
+// ParseWithFlags parse from flags --url and --tag
+func ParseWithFlags() {
 	url, tag := setupFlags()
+	tagsWithContent := parse(url, tag)
+	executeAction(tagsWithContent)
+}
 
-	tagsWithContent := getTagsList(url, tag)
-
-	for i := 0; i < len(tagsWithContent); i++ {
-		println(tagsWithContent[i].tag, ":", tagsWithContent[i].content)
+func executeAction(lst []TagWithContent) {
+	for i := 0; i < len(lst); i++ {
+		println(lst[i].tag, ":", lst[i].content)
 	}
 }
 
@@ -31,7 +40,7 @@ func setupFlags() (string, string) {
 	return *urlFlagPtr, *tagFlagPtr
 }
 
-func getTagsList(url string, tag string) []TagWithContent {
+func parse(url string, tag string) []TagWithContent {
 	response := fetch(url)
 	parsed := parseHTMLPage(response, tag)
 	return parsed
