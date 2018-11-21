@@ -1,4 +1,4 @@
-package main
+package scraper
 
 import (
 	"flag"
@@ -8,10 +8,10 @@ import (
 	"os"
 )
 
-func main() {
+func parse() {
 	url, tag := setupFlags()
 
-	tagsWithContent := parse(url, tag)
+	tagsWithContent := getTagsList(url, tag)
 
 	for i := 0; i < len(tagsWithContent); i++ {
 		println(tagsWithContent[i].tag, ":", tagsWithContent[i].content)
@@ -31,7 +31,7 @@ func setupFlags() (string, string) {
 	return *urlFlagPtr, *tagFlagPtr
 }
 
-func parse(url string, tag string) []TagWithContent {
+func getTagsList(url string, tag string) []TagWithContent {
 	response := fetch(url)
 	parsed := ParseHTMLPage(response, tag)
 	return parsed
