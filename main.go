@@ -2,29 +2,26 @@ package scraper
 
 import (
 	"flag"
-	"io/ioutil"
 	"log"
-	"net/http"
-	"os"
 )
 
 // ParseWithArgs parse from arguments url and tag
-func ParseWithArgs(url string, tag string) {
+func ParseWithArgs(url string, tag string) ([]byte, error) {
 	tagsWithContent := parse(url, tag)
-	executeAction(tagsWithContent)
+	return toJSONfrom(tagsWithContent)
 }
 
 // ParseWithFlags parse from flags --url and --tag
-func ParseWithFlags() {
+func ParseWithFlags() ([]byte, error) {
 	url, tag := setupFlags()
 	tagsWithContent := parse(url, tag)
-	executeAction(tagsWithContent)
+	return toJSONfrom(tagsWithContent)
 }
 
-func executeAction(lst []TagWithContent) {
-	for i := 0; i < len(lst); i++ {
-		println(lst[i].tag, ":", lst[i].content)
-	}
+func parse(url string, tag string) []TagWithContent {
+	response := fetch(url)
+	parsed := parseHTMLPage(response, tag)
+	return parsed
 }
 
 func setupFlags() (string, string) {
@@ -38,24 +35,4 @@ func setupFlags() (string, string) {
 	}
 	println("parsing url:", *urlFlagPtr, "| tag:", *tagFlagPtr)
 	return *urlFlagPtr, *tagFlagPtr
-}
-
-func parse(url string, tag string) []TagWithContent {
-	response := fetch(url)
-	parsed := parseHTMLPage(response, tag)
-	return parsed
-}
-
-func fetch(url string) string {
-	res, err := http.Get(url)
-	if err != nil {
-		println("url err", err.Error())
-		os.Exit(2)
-	}
-	defer res.Body.Close()
-
-	body, _ := ioutil.ReadAll(res.Body)
-
-	parsedResponse := string(body)
-	return parsedResponse
 }
