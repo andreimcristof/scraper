@@ -16,6 +16,8 @@ type TagWithContentJSON struct {
 	Content string `json:"content"`
 }
 
-func toJSONfrom(lst []TagWithContent) ([]byte, error) {
-	return json.Marshal(lst)
+func toJSONfrom(lst []TagWithContent) string {
+	marshalled, _ := json.Marshal(lst)
+	jsonStrResult := string(marshalled)
+	return jsonStrResult
 }
