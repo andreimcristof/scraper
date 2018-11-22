@@ -7,12 +7,6 @@ import (
 	"golang.org/x/net/html"
 )
 
-// TagWithContent a tag and its value content
-type TagWithContent struct {
-	tag     string
-	content string
-}
-
 func (t TagWithContent) isValidTag(specificTag string) bool {
 	isValid := t.content != "" && t.tag != ""
 
