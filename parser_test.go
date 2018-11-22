@@ -6,8 +6,8 @@ import (
 
 func TestIsValid(t *testing.T) {
 	tc := TagWithContent{
-		content: "",
-		tag:     "",
+		Content: "",
+		Tag:     "",
 	}
 	actual := tc.isValidTag("")
 	if actual {
@@ -15,8 +15,8 @@ func TestIsValid(t *testing.T) {
 	}
 
 	tc = TagWithContent{
-		content: "content",
-		tag:     "",
+		Content: "content",
+		Tag:     "",
 	}
 	actual = tc.isValidTag("")
 	if actual {
@@ -24,8 +24,8 @@ func TestIsValid(t *testing.T) {
 	}
 
 	tc = TagWithContent{
-		content: "",
-		tag:     "div",
+		Content: "",
+		Tag:     "div",
 	}
 	actual = tc.isValidTag("")
 	if actual {
@@ -33,8 +33,8 @@ func TestIsValid(t *testing.T) {
 	}
 
 	tc = TagWithContent{
-		content: "content",
-		tag:     "div",
+		Content: "content",
+		Tag:     "div",
 	}
 	actual = tc.isValidTag("")
 	if !actual {
@@ -42,8 +42,8 @@ func TestIsValid(t *testing.T) {
 	}
 
 	tc = TagWithContent{
-		content: "",
-		tag:     "div",
+		Content: "",
+		Tag:     "div",
 	}
 	actual = tc.isValidTag("div")
 	if actual {
@@ -51,8 +51,8 @@ func TestIsValid(t *testing.T) {
 	}
 
 	tc = TagWithContent{
-		content: "content",
-		tag:     "div",
+		Content: "content",
+		Tag:     "div",
 	}
 	actual = tc.isValidTag("div")
 	if !actual {

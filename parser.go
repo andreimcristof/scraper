@@ -8,10 +8,10 @@ import (
 )
 
 func (t TagWithContent) isValidTag(specificTag string) bool {
-	isValid := t.content != "" && t.tag != ""
+	isValid := t.Content != "" && t.Tag != ""
 
 	if specificTag != "" {
-		return isValid && t.tag == specificTag
+		return isValid && t.Tag == specificTag
 	}
 
 	return isValid
@@ -25,10 +25,10 @@ func parseHTMLPage(content string, specificTag string) []TagWithContent {
 	recursiveIteratorFunc = func(thisNode *html.Node) {
 		var element TagWithContent
 		if thisNode.Type == html.ElementNode {
-			element.tag = thisNode.Data
+			element.Tag = thisNode.Data
 			contentChild := thisNode.FirstChild
 			if contentChild != nil {
-				element.content = contentChild.Data
+				element.Content = contentChild.Data
 			}
 		}
 		for child := thisNode.FirstChild; child != nil; child = child.NextSibling {
