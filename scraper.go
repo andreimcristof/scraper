@@ -5,18 +5,18 @@ import (
 	"log"
 )
 
-// ParseWithArgs parse from arguments url and tag
-func ParseWithArgs(url string, tag string) string {
-	return parse(url, tag)
+// ScrapeWithArgs parse from arguments url and tag
+func ScrapeWithArgs(url string, tag string) string {
+	return scrape(url, tag)
 }
 
-// ParseWithFlags parse from flags --url and --tag
-func ParseWithFlags() string {
+// ScrapeWithFlags parse from flags --url and --tag
+func ScrapeWithFlags() string {
 	url, tag := getFromFlags()
-	return parse(url, tag)
+	return scrape(url, tag)
 }
 
-func parse(url string, tag string) string {
+func scrape(url string, tag string) string {
 	response := fetch(url)
 	parsed := parseHTMLPage(response, tag)
 	strJSON := toJSONfrom(parsed)
