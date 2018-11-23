@@ -16,8 +16,8 @@ func ScrapeWithFlags() string {
 	return scrape(url, tag)
 }
 
-func scrape(url string, tag string) string {
-	response := fetch(url)
+func scrape(u string, tag string) string {
+	response := fetch(u)
 	parsed := parseHTMLPage(response, tag)
 	strJSON := toJSONfrom(parsed)
 	return strJSON
@@ -26,12 +26,12 @@ func scrape(url string, tag string) string {
 func getFromFlags() (string, string) {
 	urlArgHint := "enter url to parse"
 	tagArgHint := "(optional) enter a specific tag to retrieve only"
-	urlFlagPtr := flag.String("url", "", urlArgHint)
-	tagFlagPtr := flag.String("tag", "", tagArgHint)
+	urlFlag := flag.String("url", "", urlArgHint)
+	tagFlag := flag.String("tag", "", tagArgHint)
 	flag.Parse()
-	if *urlFlagPtr == "" {
+	if *urlFlag == "" {
 		log.Fatal("must specify --url flag")
 	}
-	println("parsing url:", *urlFlagPtr, "| tag:", *tagFlagPtr)
-	return *urlFlagPtr, *tagFlagPtr
+	println("parsing url:", *urlFlag, "| tag:", *tagFlag)
+	return *urlFlag, *tagFlag
 }

@@ -14,13 +14,10 @@ type webURL struct {
 	address string
 }
 
-// https://stackoverflow.com/questions/43240970/how-to-mock-http-client-do-method
-
 func (w webURL) get() (*http.Response, error) {
 	res, err := http.Get(w.address)
-	print("err", err.Error())
 	if err != nil {
-		println("url err", err.Error())
+		println("httpGet err", err.Error())
 		os.Exit(2)
 	}
 	defer res.Body.Close()
