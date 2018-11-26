@@ -24,13 +24,13 @@ func parseHTMLPage(content string, specificTag string) []TagWithContent {
 	var recursiveIteratorFunc func(*html.Node)
 	recursiveIteratorFunc = func(thisNode *html.Node) {
 		var element TagWithContent
-		if thisNode.Type == html.ElementNode {
-			element.Tag = thisNode.Data
-			contentChild := thisNode.FirstChild
-			if contentChild != nil {
-				element.Content = contentChild.Data
-			}
+		// if thisNode.Type == html.ElementNode {
+		element.Tag = thisNode.Data
+		contentChild := thisNode.FirstChild
+		if contentChild != nil {
+			element.Content = contentChild.Data
 		}
+		// }
 		for child := thisNode.FirstChild; child != nil; child = child.NextSibling {
 			recursiveIteratorFunc(child)
 		}
