@@ -64,13 +64,15 @@ func TestIsValid(t *testing.T) {
 func TestParseHTMLPage(t *testing.T) {
 	mock := `<html>
 				<body>
-					<div></div>
+					<div></div> 
 				</body>
 			</html>`
 
 	expectedTag := "html"
 	result := parseHTMLPage(mock, expectedTag)
+	t.Log("res ", result)
 	tag := result[0]
+
 	hasEmptySpaces := strings.Contains(tag.Content, " ")
 	if hasEmptySpaces {
 		t.Errorf("parsed content should not contain empty spaces")
@@ -81,10 +83,19 @@ func TestParseHTMLPage(t *testing.T) {
 		t.Errorf("incorrect tag extracted, asked for %v and got instead %v", expectedTag, tag.Tag)
 	}
 
-	containsChildTag := strings.Contains(tag.Content, expectedTag)
-	if !containsChildTag {
-		t.Errorf("parsed content should contain child tags")
+	expectedTag = "body"
+	occurencesOfExpectedTag := 0
+	for _, b := range result {
+		if b.Tag == expectedTag {
+			occurencesOfExpectedTag++
+		}
 	}
 
-	t.Log(tag.Content)
+	if occurencesOfExpectedTag == 0 {
+		t.Errorf("parsed content should contain child tag %v", expectedTag)
+	}
+
+	if len(result) != 4 {
+		t.Errorf("expected 4 tags, received %v instead", len(result))
+	}
 }
